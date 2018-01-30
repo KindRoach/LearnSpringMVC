@@ -1,6 +1,5 @@
 package spittr.data;
 
-import com.google.common.collect.ImmutableList;
 import org.springframework.stereotype.Component;
 import spittr.model.Spittle;
 
@@ -17,5 +16,10 @@ public class TestSpittleRepository implements SpittleRepository {
             spittles.add(new Spittle("message" + i, new Date()));
         }
         return spittles;
+    }
+
+    @Override
+    public Spittle findOne(long spittleId) {
+        return new Spittle("message" + spittleId, new Date());
     }
 }
