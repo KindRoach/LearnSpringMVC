@@ -15,6 +15,7 @@ import java.util.List;
 @Controller
 @RequestMapping("/spittles")
 public class SpittleController {
+
     private SpittleRepository spittleRepository;
 
     @Autowired
