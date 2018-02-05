@@ -22,25 +22,29 @@ import java.util.List;
 @ComponentScan(basePackages = {"spittr.web", "spittr.api"})
 public class WebConfig extends WebMvcConfigurerAdapter {
 
-    @Override
-    public void configureContentNegotiation(ContentNegotiationConfigurer configurer) {
-        configurer.ignoreAcceptHeader(true)
-                .defaultContentType(MediaType.TEXT_HTML);
-    }
-
-    @Bean
-    public ViewResolver contentNegotiatingViewResolver(ContentNegotiationManager manager) {
-        ContentNegotiatingViewResolver resolver = new ContentNegotiatingViewResolver();
-        resolver.setContentNegotiationManager(manager);
-
-        // Define all possible view resolvers
-        List<ViewResolver> resolvers = new ArrayList<>();
-        resolvers.add(jsonViewResolver());
-        resolvers.add(jspViewResolver());
-
-        resolver.setViewResolvers(resolvers);
-        return resolver;
-    }
+//    @Override
+//    public void configureContentNegotiation(ContentNegotiationConfigurer configurer) {
+//        configurer.defaultContentType(MediaType.TEXT_HTML);
+//    }
+//
+//    @Bean
+//    public ViewResolver contentNegotiatingViewResolver(ContentNegotiationManager manager) {
+//        ContentNegotiatingViewResolver resolver = new ContentNegotiatingViewResolver();
+//        resolver.setContentNegotiationManager(manager);
+//
+//        // Define all possible view resolvers
+//        List<ViewResolver> resolvers = new ArrayList<>();
+//        resolvers.add(jsonViewResolver());
+//        resolvers.add(jspViewResolver());
+//
+//        resolver.setViewResolvers(resolvers);
+//        return resolver;
+//    }
+//
+//    @Bean
+//    public ViewResolver jsonViewResolver() {
+//        return new JsonViewResolver();
+//    }
 
     @Bean
     public ViewResolver jspViewResolver() {
@@ -49,11 +53,6 @@ public class WebConfig extends WebMvcConfigurerAdapter {
         resolver.setSuffix(".jsp");
         resolver.setExposeContextBeansAsAttributes(true);
         return resolver;
-    }
-
-    @Bean
-    public ViewResolver jsonViewResolver() {
-        return new JsonViewResolver();
     }
 
     @Override

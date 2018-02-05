@@ -13,14 +13,17 @@ public class Spittle {
 
     private static final List<String> FIELDS = ImmutableList.of("id", "message", "time");
 
+    @Setter
     @Getter
-    private final Long id;
+    private Long id;
 
+    @Setter
     @Getter
-    private final String message;
+    private String message;
 
+    @Setter
     @Getter
-    private final Date time;
+    private Date time;
 
     @Setter
     @Getter
@@ -29,6 +32,9 @@ public class Spittle {
     @Setter
     @Getter
     private Double longitude;
+
+    public Spittle() {
+    }
 
     public Spittle(String message, Date time) {
         this(message, time, null, null);

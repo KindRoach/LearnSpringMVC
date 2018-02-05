@@ -22,4 +22,10 @@ public class TestSpittleRepository implements SpittleRepository {
     public Spittle findOne(long spittleId) {
         return new Spittle("message" + spittleId, new Date());
     }
+
+    @Override
+    public Spittle save(Spittle spittle) {
+        spittle.setId(24L);
+        return spittle;
+    }
 }
