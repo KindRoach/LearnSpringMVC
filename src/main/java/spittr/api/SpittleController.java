@@ -1,10 +1,11 @@
 package spittr.api;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+import spittr.api.error.ApiError;
+import spittr.api.exception.SpittleUnsavedException;
 import spittr.data.SpittleRepository;
 import spittr.model.Spittle;
 
@@ -28,8 +29,23 @@ public class SpittleController {
         return spittleRepository.findSpittles(max, count);
     }
 
-    @RequestMapping(method = RequestMethod.POST, consumes = "application/json")
-    public Spittle saveSpittle(Spittle spittle) {
-        return spittleRepository.save(spittle);
+    @RequestMapping(
+            method = RequestMethod.POST,
+            consumes = "application/json")
+    public ResponseEntity<Spittle> saveSpittle(Spittle spittle)
+            throws SpittleUnsavedException {
+        if (spittle.getLatitude() == null || spittle.getLongitude() == null) {
+            throw new SpittleUnsavedException("Latitude or Longitude is null");
+        } else {
+            return new ResponseEntity<>(
+                    spittleRepository.save(spittle),
+                    HttpStatus.CREATED);
+        }
+    }
+
+    @ExceptionHandler(SpittleUnsavedException.class)
+    public ResponseEntity<ApiError> spittleNotFound(SpittleUnsavedException e) {
+        ApiError apiError = new ApiError(HttpStatus.BAD_REQUEST, e.getMessage());
+        return new ResponseEntity<>(apiError, HttpStatus.NOT_FOUND);
     }
 }
