@@ -29,6 +29,12 @@ public class SpittleController {
         return spittleRepository.findSpittles(max, count);
     }
 
+    @RequestMapping(value = "/{spittleId}", method = RequestMethod.GET)
+    public Spittle getSpittleById(
+            @PathVariable(value = "spittleId") long spittleId) {
+        return spittleRepository.findOne(spittleId);
+    }
+
     @RequestMapping(
             method = RequestMethod.POST,
             consumes = "application/json")
